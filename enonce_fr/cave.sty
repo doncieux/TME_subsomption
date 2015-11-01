@@ -1,0 +1,103 @@
+\typeout{-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-}
+\typeout{cave.sty: powered by upmc.sty}
+\typeout{-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-}
+\DeclareOption*{\PassOptionsToPackage{\CurrentOption}{upmc}}
+\ProcessOptions
+\RequirePackage{upmc}
+\RequirePackage{xcolor}
+\ProvidesPackage{cave}[2011/09/26]
+
+\def\diplome{Master d'informatique}
+\def\module{IA et robotique}
+\RequirePackage{listings}
+\lstset{language=C}
+\lstset{basicstyle=\ttfamily,showstringspaces=false,extendedchars=true, emph={bool, string}, emphstyle=\textbf}
+
+\newcommand{\semestre}{\arabic{bannee}oct}
+\newcommand{\caverep}{li215-\semestre{}}
+\newcommand{\cavepath}{/Infos/lmd/\arabic{bannee}/licence/ue/\caverep{}}
+
+
+\newenvironment{objectifs}{\noindent\framebox{\Large \textbf{ Objectif(s) }}\\
+\begin{dinglist}{79}}{\end{dinglist}\ \par}
+
+\newenvironment{savoirsfaire}{\noindent\framebox{\Large \textbf{ Savoir(s) faire acquis }}\\
+\begin{dinglist}{79}}{\end{dinglist}\ \par}
+
+\newenvironment{applis}{\noindent\framebox{\Large \textbf{ Applications classiques à connaître }}\\
+\begin{Pilist}{pzd}{79}}{\end{Pilist}\ \par}
+
+\newcommand{\exercices}{\noindent\framebox{\Large\textbf{ Exercice(s) }}\begin{foad}\section*{Énoncé}\end{foad}}
+
+\newcommand{\consigne}[2]{\noindent~\\\begin{center}\fcolorbox{lightgray}{lightgray}{\parbox{0.8\linewidth}{Consigne:  
+
+ Nom de fichier : \textit{#1}
+
+Prototype de la fonction : \texttt{#2}
+}}\end{center} ~\\}
+
+% Dessins en eps ou pdf
+\newcommand{\dessin}[2]{%
+  \ifpdf \includegraphics[scale=#1]{#2.pdf}%
+  \else \includegraphics[scale=#1]{#2.eps}%
+  \fi%
+}
+
+\RequirePackage[colorinlistoftodos]{todonotes}
+
+\newcommand{\mytodo}[1]{
+\todo[inline,color=green]{chapter: \thechapter, section: \thesection. #1}
+}
+
+\newcommand{\Mytodo}[1]{
+\todo[inline]{chapter: \thechapter, section: \thesection. #1}
+}
+
+\newcommand{\MYTODO}[1]{
+\todo[inline,color=red]{chapter: \thechapter, section: \thesection. #1}
+}
+
+% Titre, entête et bas de page
+\pagestyle{headandfoot}
+\headrule
+\footer{\copyright \annee \  (by UPMC/\diplome/\module)}{}{\today}
+\header%
+  {Module \module}%
+  {\large \emph{\typesujet}}%
+  {\titrecourt{} -- page \thepage/\pageref{LastPage}}
+
+\newcommand{\entete}{
+\logo{}
+
+\begin{center}
+{\LARGE \textbf{\titrelong}}
+\bigskip
+
+\revision{}
+\bigskip
+
+Version du \today
+\end{center}
+}
+
+\AtBeginDocument{\entete}
+
+\extrawidth{1in}
+\extraheadheight{-0.1in}
+\extrafootheight{-0.1in}
+
+% Exos
+\pointname{}
+\newcounter{exocounter}\setcounter{exocounter}{0}
+\newenvironment{exo}[2]{
+  \stepcounter{exocounter} \let\@currentlabel\theexocounter
+  % pour que les numéros d'exercices puissent être récupérés par label / ref
+  \pagebreak[3]% pour inciter latex à changer de page avant le début
+  \bigskip\bigskip 
+  \noindent \textbf{\large Exercice \arabic{exocounter}\hspace{2mm}
+    \ifthenelse{\equal{#1}{b}}{\emph{(base)}}{
+      \ifthenelse{\equal{#1}{o}}{\emph{(obligatoire)}}{
+        \ifthenelse{\equal{#1}{e}}{\emph{(entraînement)}}{
+          \ifthenelse{\equal{#1}{a}}{\emph{(approfondissement)}}{
+            \emph{(??)}}}}}
+    \ifthenelse{\equal{#2}{}}{}{\hspace{2mm}--\hspace{3mm}#2}}\\}{}
