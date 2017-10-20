@@ -41,9 +41,9 @@
 
 \begin{document}
 
+Vous pourrez retrouver ce document à cette URL: \url{http://pages.isir.upmc.fr/~doncieux/public/IAR_2017/TME_IAR/}
 
-
-L'objectif de ce TME est de doter un robot de comportements simples et d'étudier la complexité émergeant de la dynamique issue de l'interaction de ce robot et de ses règles de fonctionnement simples avec un environnement lui aussi très simple. 
+L'objectif de ce TME est de doter un robot de comportements simples et d'étudier la complexité émergeant de la dynamique issue de l'interaction de ce robot et de ses règles de fonctionnement avec un environnement lui aussi très simple. Il consistera également une introduction à ROS par la pratique.
 
 \section{Dans la salle de TME}
 
@@ -52,7 +52,7 @@ ROS ayant de nombreuses dépendances, il a été décidé, pour simplifier son i
 
 Pour lancer la machine virtuelle, dans le terminal, taper:
 \begin{mycommand}
-Vbox IAR_2015
+Vbox IAR_2017
 \end{mycommand}
 (puis entrez mot de passe)
 
@@ -66,7 +66,7 @@ Pour avoir accès à internet, pensez à configurer le proxy de votre navigateur
 
 \section{Préparation de l'environnement}
 
-\textit{Les instructions suivantes expliquent comment installer les sources nécessaires au fonctionnement du TME. Ces opérations ont déjà été réalisées dans la machine virtuelle dont vous disposez dans les salles de TME. Elles vous sont données pour que vous puissiez continuer hors des salles de TME. Vous pouvez passer directement à la section suivante.}
+\textit{Les instructions suivantes expliquent comment installer les sources nécessaires au fonctionnement du TME. Ces opérations ont déjà été réalisées dans la machine virtuelle mise à votre disposition dans les salles de TME. Elles vous sont données pour que vous puissiez continuer hors des salles de TME si vous le souhaitez. Vous pouvez passer directement à la section suivante.}
 
 Créer les répertoires \texttt{catkin\_ws/src}:
 \begin{mycommand}
@@ -81,7 +81,7 @@ catkin_init_workspace
 
 \subsection{Récupération des sources et compilation}
 
-Les codes sources utiles pour le TME sont téléchargeables à cette URL: \url{http://pages.isir.upmc.fr/~doncieux/public/TME_IAR/}.
+Les codes sources utiles pour le TME sont téléchargeables à cette URL: \url{http://pages.isir.upmc.fr/~doncieux/public/IAR_2017/TME_IAR/}.
 
 Vous aurez besoin de:
 \begin{itemize}
@@ -194,8 +194,8 @@ catkin_make install
 Pour lancer fastsim sur l'environnement défini pour le TME, exécutez les commandes suivantes:
 
 \begin{mycommand}
-cd ~/catkin_ws/src/subsomption/envs
-roslaunch fastsim.launch
+cd ~/catkin_ws/src/ros_fastsim/envs
+roslaunch subsomption.launch
 \end{mycommand}
 
 Vous allez à présent créer votre architecture de subsomption. Elle s'appuiera sur le programme en python \texttt{subsomption\_architecture.py}. Ce noeud ROS, qui prend en argument le nombre $n$ de comportements à définir, écoute les topic \texttt{/subsomption/channel}\textit{i}, \textit{i} étant un entier compris entre $0$ et $n$. Sur ce topic sont envoyé des message selon le format suivant:
@@ -233,6 +233,14 @@ où $n$ est le nombre de comportements souhaités.
  
 ~\\
 
+L'évaluation se basera sur une démonstration de vos comportements. NE PARTEZ PAS DE LA SALLE DE TME SANS AVOIR FAIT CETTE DEMO. 
+
+Vous devrez également envoyer un email à \url{stephane.doncieux@upmc.fr} avec, en attachement, les modules python que vous avez développé pour chaque question. Vous les accompagnerez de quelques commentaires expliquant vos choix.
+
+
+
+~\\
+
 {\Large Suivi de mur} 
 
 \begin{questions}
@@ -243,7 +251,7 @@ où $n$ est le nombre de comportements souhaités.
 En cas de collision (détectée par les bumpers), écrivez un comportement permettant du robot de reculer et de faire demi-tour. Connectez-le au canal de priorité 2.
 \end{quest}
 \begin{quest}
-Afin d'éviter les collisions, écrivez un comportement utilisant les lasers pour tourner avant de toucher un obstacle, vous lui donnerez la priorité1. Vous pouvez changer la couverture des lasers en modifiant le fichier \texttt{envs/example.xml}.
+Afin d'éviter les collisions, écrivez un comportement utilisant les lasers pour tourner avant de toucher un obstacle, vous lui donnerez la priorité 1. Vous pouvez changer la couverture des lasers en modifiant le fichier \texttt{envs/example.xml}.
 \end{quest}
 \begin{quest}
 Définissez un ou plusieurs comportements permettant au robot de suivre les murs. Vous pourrez vous appuyer sur les comportements précédents ou en définir de nouveaux.
@@ -256,7 +264,9 @@ Définissez un ou plusieurs comportements permettant au robot de suivre les murs
 Vous allez maintenant programmer un robot aspirateur ROUMEBA pour qu'il se déplace aléatoirement dans une pièce, ceci dans le but de la nettoyer. 
 
 \begin{figure}
-\includegraphics[width=\linewidth]{./roomba-movements.jpg}
+\begin{center}
+\includegraphics[width=0.7\linewidth]{./roomba-movements.jpg}
+\end{center}
 \caption{\label{fig:roomba} Trajectoire d'un robot aspirateur.}
 \end{figure}
 
@@ -264,6 +274,20 @@ Vous allez maintenant programmer un robot aspirateur ROUMEBA pour qu'il se dépl
 \begin{quest}
 Définissez un ensemble de modules permettant de reproduire le comportement observé sur la figure \ref{fig:roomba}.
 \end{quest}\end{questions}
+
+
+~\\
+
+{\Large Application sur le robot réel} 
+
+Transférez vos comportements sur le robot réel. Les caractéristiques du laser sont les suivantes:
+\begin{itemize}
+\item angle\_min: -0.51
+\item angle\_max: 0.49
+\item angle\_inc: 0.00158
+\item range\_min: 0.449
+\item range\_max: 10. 
+\end{itemize}
 
 
 \end{document}  
